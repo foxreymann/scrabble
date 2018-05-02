@@ -10,6 +10,10 @@ function scrabble($string, $array) {
 
   switch($count_numbers) {
     // none
+    case 0:
+      $message = 'array contains none of these numbers';
+    case 1:
+      $message = "array contains the number $numbers[0]";
     case count($string):
       $message = 'array contains all of these numbers';
       break;
@@ -19,7 +23,7 @@ function scrabble($string, $array) {
 
   return [
     'message' => $message,
-    'numbers' => implode(', ', $numbers)
+    'numbers' => $imploded_numbers
   ];
 }
 
@@ -34,6 +38,17 @@ class Test extends TestCase {
     $expected = [
       'message' => 'array contains 2 of these numbers. array contains numbers one, two',
       'numbers' => 'one, two'
+    ];
+    $actual = scrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testContainsAllNumbersAndOneMore() {
+    $string = 'one two three';
+    $array = ['one', 'two', 'four', 'three'];
+    $expected = [
+      'message' => 'array contains all of these numbers',
+      'numbers' => 'one, two, three'
     ];
     $actual = scrabble($string, $array);
     $this->assertEquals($actual, $expected);
