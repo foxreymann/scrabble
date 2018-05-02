@@ -1,7 +1,6 @@
 I got a small problem for you. All I want to do is give a count and appropriate answers.
 
  
-
 function contains($string, array $array) {
 
     $count = 0;
