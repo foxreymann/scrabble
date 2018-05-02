@@ -12,8 +12,11 @@ function scrabble($string, $array) {
     // none
     case 0:
       $message = 'array contains none of these numbers';
+      break;
     case 1:
-      $message = "array contains the number $numbers[0]";
+      $number = array_pop($numbers);
+      $message = "array contains the number $number";
+      break;
     case count($string):
       $message = 'array contains all of these numbers';
       break;
@@ -49,6 +52,39 @@ class Test extends TestCase {
     $expected = [
       'message' => 'array contains all of these numbers',
       'numbers' => 'one, two, three'
+    ];
+    $actual = scrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testContainsOneNumber() {
+    $string = 'one two three';
+    $array = ['two'];
+    $expected = [
+      'message' => 'array contains the number two',
+      'numbers' => 'two'
+    ];
+    $actual = scrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testEmtpyArray() {
+    $string = 'one two three';
+    $array = [];
+    $expected = [
+      'message' => 'array contains none of these numbers',
+      'numbers' => ''
+    ];
+    $actual = scrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testContainsNoneWithWrongAnswers() {
+    $string = 'one two three';
+    $array = ['four', 'fox'];
+    $expected = [
+      'message' => 'array contains none of these numbers',
+      'numbers' => ''
     ];
     $actual = scrabble($string, $array);
     $this->assertEquals($actual, $expected);
