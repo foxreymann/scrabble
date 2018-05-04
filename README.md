@@ -1,3 +1,20 @@
+# fox notes
+
+string contains all of there words
+
+
+Fox likes dogs and cats
+1: Fox likes dogs
+2: cats
+
+string: interface
+array: in
+
+elemtns in the string - 
+all elemtn is string - 
+
+# thura
+
 I got a small problem for you. All I want to do is give a count and appropriate answers.
 
  

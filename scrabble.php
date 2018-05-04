@@ -16,11 +16,9 @@ function scrabble($string, $array) {
       $number = array_pop($numbers);
       $message = "one element from the array has been found in the string. element is $number";
       break;
-    case count($string):
-      if (count($array) === $count_numbers) {
-        $message = 'all elements from the array have been found in the string';
-        break;
-      }
+    case count($array):
+      $message = 'all elements from the array have been found in the string';
+      break;
     default: // more then 1 and less than all
       $message = "$count_numbers elements from the array have been found in the string. elements are $imploded_numbers";
   }
@@ -29,6 +27,15 @@ function scrabble($string, $array) {
     'message' => $message,
     'numbers' => $imploded_numbers
   ];
+}
+
+function notScrabble($string, $array) {
+  // loop over array
+  foreach($array as $element) {
+    preg_match("/\b$element\b/", $string, $matches);
+
+var_dump($matches);
+  }
 }
 
 
@@ -62,7 +69,7 @@ class Test extends TestCase {
     $string = 'one two three';
     $array = ['one', 'two'];
     $expected = [
-      'message' => '2 elements from the array have been found in the string. elements are one, two',
+      'message' => 'all elements from the array have been found in the string',
       'numbers' => 'one, two'
     ];
     $actual = scrabble($string, $array);
