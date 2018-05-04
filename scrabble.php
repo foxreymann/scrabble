@@ -33,17 +33,39 @@ function notScrabble($string, $array) {
 	// remove new lines and long white spaces from a string
 	$string = trim(preg_replace('/\s+/', ' ', $string));
   $string = " $string ";
-var_dump($string);
 
-  // loop over array
+  $found_elements = 0;
+  $elements = [];
+
   foreach($array as &$element) {
 	  $element = trim(preg_replace('/\s+/', ' ', $element));
-    $element = preg_quote($element, '/');
-//var_dump($element);
-    preg_match("/\b$element\b/", $string, $matches);
-
-//var_dump($matches);
+    if (false !== mb_strpos($string, " $element ")) {
+      ++$found_elements;
+      $elements[] = $element;
+    }
   }
+
+  $elements = implode(', ', $elements);
+
+  switch($found_elements) {
+    case 0:
+      $message = 'none of the elements from the array has been found in the string';
+      break;
+    case 1:
+      $message = "one element from the array has been found in the string. element is $elements";
+      break;
+    case count($array):
+      $message = 'all elements from the array have been found in the string';
+      break;
+    default: // more then 1 and less than all
+      $message = "$found_elements elements from the array have been found in the string. elements are $elements";
+  }
+
+  return [
+    'message' => $message,
+    'elements' => $elements
+  ];
+
 }
 
 
@@ -57,6 +79,28 @@ class Test extends TestCase {
     $expected = [
       'message' => 'one element from the array has been found in the string. element is Fox likes dogs',
       'elements' => 'Fox likes dogs'
+    ];
+    $actual = notScrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testNotScrabbleNone() {
+    $string = 'Fox likes dogs and cats';
+    $array = ['Fox likes cats'];
+    $expected = [
+      'message' => 'none of the elements from the array has been found in the string',
+      'elements' => ''
+    ];
+    $actual = notScrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testNotScrabbleTwoElements() {
+    $string = 'Fox likes dogs and cats';
+    $array = ['Fox likes dogs', 'cats', 'wolfs'];
+    $expected = [
+      'message' => '2 elements from the array have been found in the string. elements are Fox likes dogs, cats',
+      'elements' => 'Fox likes dogs, cats'
     ];
     $actual = notScrabble($string, $array);
     $this->assertEquals($actual, $expected);
@@ -80,10 +124,9 @@ class Test extends TestCase {
 		$array = ["cool", "if", "there are none", "substring may include characters like . ' / & , £ $ and accents on letters eg foreign letters...", "in the next room", "abracadabra scroll", "ąąźźćć"];
     $expected = [
       'message' => 'all elements from the array have been found in the string',
-      'elements' => 'Fox likes dogs, and, cats'
     ];
     $actual = notScrabble($string, $array);
-    $this->assertEquals($actual, $expected);
+    $this->assertEquals($actual['message'], $expected['message']);
 	}
 
   public function testContainsAllNumbersAndOneMore() {
