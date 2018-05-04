@@ -30,8 +30,8 @@ function scrabble($string, $array) {
 }
 
 function notScrabble($string, $array) {
-	// remove new lines and long white spaces from a string
-	$string = trim(preg_replace('/\s+/', ' ', $string));
+  // remove new lines and long white spaces from a string
+  $string = trim(preg_replace('/\s+/', ' ', $string));
   $string = " $string ";
 
   $found_elements = 0;
