@@ -9,7 +9,6 @@ function scrabble($string, $array) {
   $imploded_numbers = implode(', ', $numbers);
 
   switch($count_numbers) {
-    // none
     case 0:
       $message = 'array contains none of these numbers';
       break;
@@ -17,6 +16,7 @@ function scrabble($string, $array) {
       $number = array_pop($numbers);
       $message = "array contains the number $number";
       break;
+    case count($array):
     case count($string):
       $message = 'array contains all of these numbers';
       break;
@@ -35,9 +35,20 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase {
 
-  public function testContainsTwoOfThree() {
+  public function testContainsAllTwoOfThree() {
     $string = 'one two three';
     $array = ['one', 'two'];
+    $expected = [
+      'message' => 'array contains all of these numbers',
+      'numbers' => 'one, two'
+    ];
+    $actual = scrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testContainsNotAllTwoOfThree() {
+    $string = 'one two three';
+    $array = ['one', 'two', 'five'];
     $expected = [
       'message' => 'array contains 2 of these numbers. array contains numbers one, two',
       'numbers' => 'one, two'
