@@ -30,11 +30,19 @@ function scrabble($string, $array) {
 }
 
 function notScrabble($string, $array) {
+	// remove new lines and long white spaces from a string
+	$string = trim(preg_replace('/\s+/', ' ', $string));
+  $string = " $string ";
+var_dump($string);
+
   // loop over array
-  foreach($array as $element) {
+  foreach($array as &$element) {
+	  $element = trim(preg_replace('/\s+/', ' ', $element));
+    $element = preg_quote($element, '/');
+//var_dump($element);
     preg_match("/\b$element\b/", $string, $matches);
 
-var_dump($matches);
+//var_dump($matches);
   }
 }
 
@@ -43,7 +51,7 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase {
 
-  public function testSimpleSentence() {
+  public function testNotScrabbleSimpleSentence() {
     $string = 'Fox likes dogs and cats';
     $array = ['Fox likes dogs'];
     $expected = [
@@ -53,6 +61,30 @@ class Test extends TestCase {
     $actual = notScrabble($string, $array);
     $this->assertEquals($actual, $expected);
   }
+
+  public function testNotScrabbleAllElementsWithATab() {
+    $string = 'Fox likes dogs and 	  cats';
+    $array = ['Fox likes dogs', 'and', 'cats'];
+    $expected = [
+      'message' => 'all elements from the array have been found in the string',
+      'elements' => 'Fox likes dogs, and, cats'
+    ];
+    $actual = notScrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+	public function testNotScrabbleWeirdCharacters() {
+		$string = "cool if there are none substring may include
+		characters like . ' / & , £ $ and accents on letters eg foreign
+		letters... ąąźźćć in the next room abracadabra scroll";
+		$array = ["cool", "if", "there are none", "substring may include characters like . ' / & , £ $ and accents on letters eg foreign letters...", "in the next room", "abracadabra scroll", "ąąźźćć"];
+    $expected = [
+      'message' => 'all elements from the array have been found in the string',
+      'elements' => 'Fox likes dogs, and, cats'
+    ];
+    $actual = notScrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+	}
 
   public function testContainsAllNumbersAndOneMore() {
     $string = 'one two three';
