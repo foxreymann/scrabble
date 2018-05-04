@@ -17,10 +17,10 @@ function scrabble($string, $array) {
       $message = "one element from the array has been found in the string. element is $number";
       break;
     case count($string):
-			if (count($array) === $count_numbers) {
-				$message = 'all elements from the array have been found in the string';
-				break;
-			}
+      if (count($array) === $count_numbers) {
+        $message = 'all elements from the array have been found in the string';
+        break;
+      }
     default: // more then 1 and less than all
       $message = "$count_numbers elements from the array have been found in the string. elements are $imploded_numbers";
   }
