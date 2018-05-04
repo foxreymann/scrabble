@@ -44,6 +44,7 @@ class Test extends TestCase {
       'elements' => 'Fox likes dogs'
     ];
     $actual = notScrabble($string, $array);
+    $this->assertEquals($actual, $expected);
   }
 
   public function testContainsAllNumbersAndOneMore() {
