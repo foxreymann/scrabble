@@ -10,7 +10,7 @@ function scrabble($string, $array) {
 
   switch($count_numbers) {
     case 0:
-      $message = 'none of the elements for the array has been found in the string';
+      $message = 'none of the elements from the array has been found in the string';
       break;
     case 1:
       $number = array_pop($numbers);
@@ -177,7 +177,7 @@ class Test extends TestCase {
     $string = 'one two three';
     $array = ['four', 'fox'];
     $expected = [
-      'message' => 'none of the elements for the array has been found in the string',
+      'message' => 'none of the elements from the array has been found in the string',
       'numbers' => ''
     ];
     $actual = scrabble($string, $array);
