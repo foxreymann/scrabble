@@ -36,22 +36,21 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase {
 
+  public function testSimpleSentence() {
+    $string = 'Fox likes dogs and cats';
+    $array = ['Fox likes dogs'];
+    $expected = [
+      'message' => 'one element from the array has been found in the string. element is Fox likes dogs',
+      'elements' => 'Fox likes dogs'
+    ];
+    $actual = notScrabble($string, $array);
+  }
+
   public function testContainsAllNumbersAndOneMore() {
     $string = 'one two three';
     $array = ['one', 'two', 'four', 'three'];
     $expected = [
       'message' => '3 elements from the array have been found in the string. elements are one, two, three',
-      'numbers' => 'one, two, three'
-    ];
-    $actual = scrabble($string, $array);
-    $this->assertEquals($actual, $expected);
-  }
-
-  public function testContainsAllThreeOfThree() {
-    $string = 'one two three';
-    $array = ['one', 'two', 'three'];
-    $expected = [
-      'message' => 'all elements from the array have been found in the string',
       'numbers' => 'one, two, three'
     ];
     $actual = scrabble($string, $array);
