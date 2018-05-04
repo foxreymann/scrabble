@@ -35,22 +35,33 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase {
 
-  public function testContainsAllTwoOfThree() {
+  public function testContainsAllThreeOfThree() {
+    $string = 'one two three';
+    $array = ['one', 'two', 'three'];
+    $expected = [
+      'message' => 'all elements from the array have been found in the string',
+      'numbers' => 'one, two, three'
+    ];
+    $actual = scrabble($string, $array);
+    $this->assertEquals($actual, $expected);
+  }
+
+  public function testContainsTwoOfThree() {
     $string = 'one two three';
     $array = ['one', 'two'];
     $expected = [
-      'message' => 'array contains all of these numbers',
+      'message' => '2 elements from the array have been found in the string. elements are one, two',
       'numbers' => 'one, two'
     ];
     $actual = scrabble($string, $array);
     $this->assertEquals($actual, $expected);
   }
 
-  public function testContainsNotAllTwoOfThree() {
+  public function testContainsTwoOfThreePlusOneWrong() {
     $string = 'one two three';
     $array = ['one', 'two', 'five'];
     $expected = [
-      'message' => 'array contains 2 of these numbers. array contains numbers one, two',
+      'message' => '2 elements from the array have been found in the string. elements are one, two',
       'numbers' => 'one, two'
     ];
     $actual = scrabble($string, $array);
@@ -61,7 +72,7 @@ class Test extends TestCase {
     $string = 'one two three';
     $array = ['one', 'two', 'four', 'three'];
     $expected = [
-      'message' => 'array contains all of these numbers',
+      'message' => '3 elements from the array have been found in the string. elements are one, two, three',
       'numbers' => 'one, two, three'
     ];
     $actual = scrabble($string, $array);
@@ -72,19 +83,8 @@ class Test extends TestCase {
     $string = 'one two three';
     $array = ['two'];
     $expected = [
-      'message' => 'array contains the number two',
+      'message' => 'one element from the array has been found in the string. element is two',
       'numbers' => 'two'
-    ];
-    $actual = scrabble($string, $array);
-    $this->assertEquals($actual, $expected);
-  }
-
-  public function testEmtpyArray() {
-    $string = 'one two three';
-    $array = [];
-    $expected = [
-      'message' => 'array contains none of these numbers',
-      'numbers' => ''
     ];
     $actual = scrabble($string, $array);
     $this->assertEquals($actual, $expected);
@@ -94,7 +94,7 @@ class Test extends TestCase {
     $string = 'one two three';
     $array = ['four', 'fox'];
     $expected = [
-      'message' => 'array contains none of these numbers',
+      'message' => 'none of the elements for the array has been found in the string',
       'numbers' => ''
     ];
     $actual = scrabble($string, $array);
